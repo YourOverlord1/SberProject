@@ -16,6 +16,7 @@ public class UserConfig {
         this.userService = userService;
     }
 
+
     @Bean
     public UserDetailsService userDetailsService() {
         return email -> userService.getUserByEmail(email)
