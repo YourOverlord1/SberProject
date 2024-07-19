@@ -17,6 +17,7 @@ public class UserConfig {
     }
 
 
+
     @Bean
     public UserDetailsService userDetailsService() {
         return email -> userService.getUserByEmail(email)
