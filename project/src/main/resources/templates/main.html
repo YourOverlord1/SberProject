@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spisok Del</title>
+    <style>
+        body {
+            background-color: #F5F5F5;
+            font-family: 'Roboto', sans-serif;
+            color: #333333;
+            text-align: center;
+            padding: 50px;
+            margin: 0;
+        }
+        h1 {
+            font-size: 36px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #FFFFFF;
+            border: 1px solid #DDDDDD;
+            border-radius: 10px;
+            padding: 40px;
+            display: inline-block;
+            text-align: left;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 400px;
+            max-width: 100%;
+        }
+        label, input, select, div {
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: block;
+            width: 100%;
+            color: #333333;
+        }
+        input[type="text"], input[type="datetime-local"], select {
+            background-color: #FAFAFA;
+            border: 1px solid #CCCCCC;
+            border-radius: 5px;
+            padding: 10px;
+            color: #333333;
+            font-size: 16px;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .form-error {
+            color: #E57373;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        button, input[type="submit"] {
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+            color: #FFFFFF;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        button:hover, input[type="submit"]:hover {
+            background-color: #45A049;
+        }
+        fieldset {
+            border: 1px solid #CCCCCC;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 15px;
+        }
+        legend {
+            font-size: 16px;
+            color: #333333;
+        }
+    </style>
+</head>
+<body>
+<h1>Давай составим список дел!</h1>
+<form th:object="${base}" action="/main" method="post">
+    <label for="name">Название цели:</label>
+    <input type="text" id="name" th:field="*{name}"/>
+    <div class="form-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+
+    <label for="description">Описание:</label>
+    <input type="text" id="description" th:field="*{description}"/>
+
+    <label>Важность:</label>
+    <div>
+        <input type="radio" value="1" th:field="*{rating}"/>
+        <input type="radio" value="2" th:field="*{rating}"/>
+        <input type="radio" value="3" th:field="*{rating}"/>
+        <input type="radio" value="4" th:field="*{rating}"/>
+        <input type="radio" value="5" th:field="*{rating}"/>
+    </div>
+
+    <label for="localdate">Дата и время:</label>
+    <input type="datetime-local" id="localdate" th:field="*{time}"/>
+    <div class="form-error" th:if="${#fields.hasErrors('time')}" th:text="${#fields.errors('time').get(#fields.errors('time').size() - 1)}"></div>
+
+    <label for="category">Категория:</label>
+    <select id="category" th:field="*{category}">
+        <option value="LIFE">LIFE</option>
+        <option value="WORK">WORK</option>
+        <option value="REST">REST</option>
+        <option value="FAMILY">FAMILY</option>
+        <option value="OTHER">OTHER</option>
+    </select>
+
+    <label for="repeatable">Повторяющаяся:</label>
+    <select id="repeatable" th:field="*{repeatable}">
+        <option value="NEVER">NEVER</option>
+        <option value="HOURS">HOURS</option>
+        <option value="DAY">DAY</option>
+        <option value="WEEK">WEEK</option>
+    </select>
+
+    <fieldset>
+        <legend>Выполнено:</legend>
+        <div>
+            <input type="checkbox" id="active" th:field="*{active}" checked/>
+            <label for="active">да</label>
+        </div>
+    </fieldset>
+
+    <button type="submit">Добавить план</button>
+</form>
+
+<form action="/main/all" target="_blank">
+    <button>Все твои работы тут</button>
+</form>
+</body>
+</html>

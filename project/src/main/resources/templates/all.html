@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <style>
+        body {
+            background-color: #F5F5F5;
+            font-family: 'Arial', sans-serif;
+            color: #333333;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            color: #4CAF50;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: #FFFFFF;
+            border: 1px solid #DDDDDD;
+            border-radius: 8px;
+            padding: 20px;
+            display: inline-block;
+            text-align: left;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        label {
+            font-size: 18px;
+            color: #333333;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input[type="text"], input[type="datetime-local"], select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #DDDDDD;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #333333;
+        }
+
+        input[type="submit"], button {
+            background-color: #4CAF50;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover, button:hover {
+            background-color: #45A049;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .form-error {
+            color: #E57373;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        fieldset {
+            border: 1px solid #DDDDDD;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 15px;
+        }
+
+        legend {
+            font-size: 16px;
+            color: #333333;
+        }
+
+        .link-container {
+            margin-top: 20px;
+        }
+
+        .link-container a {
+            display: block;
+            color: #4CAF50;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .link-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<h1>Все твои записи</h1>
+
+
+<form action="/main/all/forName">
+    <label for="date"> Поиск по словам </label>
+    <input name="search" type="text" id="search">
+    <input type="submit" value="Поиск"/>
+</form>
+
+<form action="/main/all/forTime">
+    <label for="date"> По дате поиск </label>
+    <input name="date" type="datetime-local" id="date"/>
+    <input type="submit" value="Поиск"/>
+</form>
+
+<form action="/main/all/completed" target="_blank">
+    <button>Выполненные</button>
+</form>
+<form action="/main/all/notcompleted" target="_blank">
+    <button>Невыполненные</button>
+</form>
+<form action="/main/all/all" target="_blank">
+    <button>Показать все задачи</button>
+</form>
+<form action="/main/all/allSort" target="_blank">
+    <button>Показать задачи по важности</button>
+</form>
+
+<form action="/main/all/forCategory">
+<p><select name="category" id="category">
+    <option value="LIFE">LIFE</option>
+    <option value="WORK">WORK</option>
+    <option value="REST">REST</option>
+    <option value="FAMILY">FAMILY</option>
+    <option value="OTHER">OTHER</option>
+    <input type="submit" value="Поиск"/>
+</select></p>
+</form>
+<br>
+<div th:each="all : ${all}">
+    <a th:text="${all.getName()}"
+       th:href="@{/main/{id}(id=${all.getId()})}">base</a>
+    <a th:href="@{/archive/{id}(id=${all.getId()})}">Заархивировать</a>
+</div>
+<div th:each="archive : ${archive}">
+    <a th:text="${archive.getName()}"
+       th:href="@{/main/archive/{id}(id=${archive.getId()})}">base</a>
+</div>
+
+
+</body>
+</html>

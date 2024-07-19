@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register</title>
+    <style>
+        body {
+            background-color: #F5F5F5;
+            font-family: 'Roboto', sans-serif;
+            color: #333333;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 36px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #FFFFFF;
+            border: 1px solid #DDDDDD;
+            border-radius: 10px;
+            padding: 40px;
+            display: inline-block;
+            text-align: left;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: block;
+            color: #333333;
+        }
+        input[type="text"], input[type="password"] {
+            background-color: #FAFAFA;
+            border: 1px solid #CCCCCC;
+            border-radius: 5px;
+            padding: 10px;
+            width: 100%;
+            color: #333333;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        input[type="submit"], button {
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+            color: #FFFFFF;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover, button:hover {
+            background-color: #45A049;
+        }
+        .register {
+            margin-top: 20px;
+        }
+        .form-error {
+            color: #E57373;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+<h1>Зарегистрируйте свой аккаунт</h1>
+<form th:action="@{/register}" th:object="${user}" method="post">
+    <div>
+        <label>Username:</label>
+        <input type="text" th:field="*{email}" />
+        <div class="form-error" th:if="${#fields.hasErrors('email')}" th:text="${#fields.errors('email').get(#fields.errors('email').size() - 1)}"></div>
+    </div>
+    <div>
+        <label>Password:</label>
+        <input type="password" th:field="*{password}" />
+        <div class="form-error" th:if="${#fields.hasErrors('password')}" th:text="${#fields.errors('password').get(#fields.errors('password').size() - 1)}"></div>
+    </div>
+    <div>
+        <button type="submit">Регистрация</button>
+    </div>
+</form>
+<div class="register">
+    <form action="/login" target="_blank">
+        <button>Вход</button>
+    </form>
+</div>
+</body>
+</html>

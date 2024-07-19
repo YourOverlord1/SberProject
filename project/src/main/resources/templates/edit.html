@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <style>
+    body {
+        background: url('https://example.com/your-pony-image.jpg') no-repeat center center fixed;
+        background-size: cover;
+        font-family: 'Roboto', sans-serif;
+        color: #333333;
+        text-align: center;
+        padding: 50px;
+        margin: 0;
+    }
+
+    h1 {
+        color: #4CAF50;
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    form {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid #DDDDDD;
+        border-radius: 10px;
+        padding: 30px;
+        display: inline-block;
+        text-align: left;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    label, input, select, .detail {
+        display: block;
+        margin: 10px 0;
+        font-size: 16px;
+        color: #333333;
+    }
+
+    input[type="text"], input[type="datetime-local"], select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #CCCCCC;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    input[type="radio"], input[type="checkbox"] {
+        margin-right: 10px;
+    }
+
+    fieldset {
+        border: 1px solid #CCCCCC;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px 0;
+    }
+
+    legend {
+        color: #4CAF50;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: #FFFFFF;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    button:hover {
+        background-color: #45A049;
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .form-error {
+        color: #D32F2F;
+        font-size: 14px;
+    }
+
+    .detail a {
+        color: #4CAF50;
+        text-decoration: none;
+    }
+
+    .detail a:hover {
+        text-decoration: underline;
+    }
+</style>
+</head>
+<body>
+<h1>Изменить задачу</h1>
+
+<form th:action="@{/main/edit/{id}(id=${base.getId()})}" th:object="${base}" method="post">
+    Название цели: <input type="text" th:field="*{name}"><br/>
+    Описание: <input type="text" step="any" th:field="*{description}"><br/>
+    Важность: <div><input type="radio" value="1" th:field="*{rating}"/>
+    <input type="radio" value="2" th:field="*{rating}"/>
+    <input type="radio" value="3" th:field="*{rating}"/>
+    <input type="radio" value="4" th:field="*{rating}"/>
+    <input type="radio" value="5" th:field="*{rating}"/></div>
+    <label for="localdate">Дата и время: </label>
+    <input type="datetime-local" id="localdate" th:field="*{time}"/><br/>
+    <fieldset style="width:10em">
+        <legend>Выполнено:</legend>
+        <div>
+            <input type="checkbox" id="scales" th:field="*{active}" checked />
+            <label for="scales">да</label>
+        </div>
+    </fieldset>
+    <button type="submit">Сохранить твои изменения</button>
+</form>
+
+<form th:action="@{/delete/{id}(id=${base.getId()})}" th:object="${base}" target="_blank">
+    <button>Удали</button>
+</form>
+</body>
+</html>
